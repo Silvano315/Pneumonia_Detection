@@ -128,9 +128,6 @@ def visualize_random_images_with_canny(paths, folder_name, num_images=9):
     plt.tight_layout()
     plt.show()
 
-
-
-
 # Function to visualize histograms for how widths and heights are distributed for each class in a choosen folder:
 def visualize_image_sizes_per_class(paths_NORMAL, paths_PNEUMONIA, folder_name):
 
@@ -174,5 +171,33 @@ def visualize_image_sizes_per_class(paths_NORMAL, paths_PNEUMONIA, folder_name):
     plt.xlabel('Dimension')
     plt.ylabel('Frequency')
     plt.title(f'Image Sizes in {folder_name} Folder')
+    plt.legend()
+    plt.show()
+
+
+def pixel_value_distribution(paths_NORMAL, paths_PNEUMONIA, folder_name, subject_normal, subject_pneumonia):
+
+    # Error messages for subjects out of range
+    if subject_normal < 0 or subject_normal >= len(paths_NORMAL):
+        print(f"Error: Subject number {subject_normal} is out of range for {folder_name} NORMAL folder.")
+        return
+    if subject_pneumonia < 0 or subject_pneumonia >= len(paths_PNEUMONIA):
+        print(f"Error: Subject number {subject_pneumonia} is out of range for {folder_name} PNEUMONIA folder.")
+        return
+
+    normal_image_path = paths_NORMAL[subject_normal]
+    pneumonia_image_path = paths_PNEUMONIA[subject_pneumonia]
+
+    normal_img = cv2.imread(normal_image_path)
+    pneumonia_img = cv2.imread(pneumonia_image_path)
+
+    # Histogram for pixel distribution
+    plt.figure(figsize=(12, 6))
+    plt.hist(normal_img.ravel(), bins=256, color='blue', alpha=0.75, label='NORMAL')
+    plt.hist(pneumonia_img.ravel(), bins=256, color='red', alpha=0.75, label='PNEUMONIA')
+
+    plt.xlabel('Pixel Value')
+    plt.ylabel('Frequency')
+    plt.title(f'Pixel Value Distribution for two images in {folder_name} Folders')
     plt.legend()
     plt.show()
