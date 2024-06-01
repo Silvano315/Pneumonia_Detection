@@ -52,7 +52,13 @@ The dataset is distributed as shown in the following bar plot:
 
 ### Data Visualization
 
-Explanation of data visualization techniques used to explore the dataset.
+In [data visualization notebook](data_visualization.ipynb), I used open cv, matplotlib, seaborn to visualize some useful information about the images and the dataset.
+
+I've applied Canny's Filter as edge detector in order to enhance the visibility of edges in the images. It is an edge detection operator that uses a multi-stage algorithm to detect a wide range of edges in images. It was useful for detecting edges in noisy images and is particularly effective due to its ability to suppress noise while preserving important edge information. 
+
+I've analyzed the distribution of widths and heights for images in each class (Pneumonia and Normal). Histogram analysis provides valuable insights so to verify no differences into the distribution of pixel intensities across images.
+
+I've also compared pixel distribution for two representative images from the Pneumonia and Normal classes. This was necessary to see if there were some kind of discrepancies between the two classes.
 
 ### Deep Learning models
 
@@ -79,6 +85,10 @@ Summary of the main results obtained from the project, including model performan
 ## Docker App
 
 Details about the Docker app created for deploying the project, including how to run it locally and any dependencies.
+
+docker build -t pneumonia-gradcam-app .                             
+
+docker run --platform linux/amd64 -p 5001:5000 pneumonia-gradcam-app
 
 ![Localhost screen](images_for_readme/localhost.png)
 
