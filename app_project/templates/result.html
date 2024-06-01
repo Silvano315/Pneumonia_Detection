@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Prediction Result: {{ result }}</h1>
+    <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Uploaded Image">
+    <h2>Grad-CAM Heatmap:</h2>
+    <img src="{{ url_for('uploaded_file', filename='heatmap_' + filename) }}" alt="Grad-CAM Heatmap">
+</body>
+</html>
