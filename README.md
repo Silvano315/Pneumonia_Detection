@@ -54,7 +54,9 @@ The dataset is distributed as shown in the following bar plot:
 
 In [data visualization notebook](data_visualization.ipynb), I used open cv, matplotlib, seaborn to visualize some useful information about the images and the dataset.
 
-I've applied Canny's Filter as edge detector in order to enhance the visibility of edges in the images. It is an edge detection operator that uses a multi-stage algorithm to detect a wide range of edges in images. It was useful for detecting edges in noisy images and is particularly effective due to its ability to suppress noise while preserving important edge information. 
+I've applied **Canny's Filter** as edge detector in order to enhance the visibility of edges in the images. It is an edge detection operator that uses a multi-stage algorithm to detect a wide range of edges in images. It was useful for detecting edges in noisy images and is particularly effective due to its ability to suppress noise while preserving important edge information. 
+
+![CCanny's Filter](images_for_readme/Canny_filter.png)
 
 I've analyzed the distribution of widths and heights for images in each class (Pneumonia and Normal). Histogram analysis provides valuable insights so to verify no differences into the distribution of pixel intensities across images.
 
@@ -62,7 +64,9 @@ I've also compared pixel distribution for two representative images from the Pne
 
 ### Deep Learning models
 
-Overview of the deep learning models employed in the project.
+In [model deep learning notebook](model_deep_learning.ipynb), I wanted to create two different deep learning approaches to detect pneumonia in this binary classification problem: a DL model from scratch and a DL model based on transfer learning technique. 
+
+The main idea was that the transfer learning model would have reached the best performances compared to the first one and it would have verified the enourmous power offered by this technique. I applied the base model taken from a benchmark algorithm, already pre-trained for another purpose (face recognition), and reused for my goal (pneumonia detection).
 
 #### Model from scratch
 
