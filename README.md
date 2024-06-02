@@ -141,14 +141,25 @@ By integrating Grad-CAM, we were able to not only achieve high performance in pn
 
 ## Docker App
 
-Details about the Docker app created for deploying the project, including how to run it locally and any dependencies.
+At this point, I wanted to do a step forward and create a Docker container for an application, designed to assist in the detection of pneumonia from chest X-ray images using deep learning models. It provides a web interface where users can upload X-ray images and receive predictions along with Grad-CAM heatmaps, which highlight the regions of the image that the model considered important for making its decision.
 
-docker build -t pneumonia-gradcam-app .                             
+By containerizing this application with Docker, I wanted to ensure that it can be easily shared, deployed, and scaled across various environments without worrying about dependency conflicts or differing system configurations.
 
-docker run --platform linux/amd64 -p 5001:5000 pneumonia-gradcam-app
+Details about the Docker app created for deploying the project are in this [folder](app_project/). For this app, I need Python libraries such as **TensorFlow** for deep learning and **Flask** for creating the web application.
+
+After setting up the files and the .h5 model in the [folder](app_project/), you can run it locally with these command:
+1. Build the Docker image:
+```sh
+docker build -t pneumonia-gradcam-app .
+```
+2. Running the Docker Container:
+```sh
+docker run --gpus all -p 5001:5000 pneumonia-gradcam-app
+```
+
+This is an example of what you can seed:
 
 ![Localhost screen](images_for_readme/localhost.png)
-
 
 ## References
 
