@@ -56,7 +56,7 @@ In [data visualization notebook](data_visualization.ipynb), I used open cv, matp
 
 I've applied **Canny's Filter** as edge detector in order to enhance the visibility of edges in the images. It is an edge detection operator that uses a multi-stage algorithm to detect a wide range of edges in images. It was useful for detecting edges in noisy images and is particularly effective due to its ability to suppress noise while preserving important edge information. 
 
-![CCanny's Filter](images_for_readme/Canny_filter.png)
+![Canny's Filter](images_for_readme/Canny_filter.png)
 
 I've analyzed the distribution of widths and heights for images in each class (Pneumonia and Normal). Histogram analysis provides valuable insights so to verify no differences into the distribution of pixel intensities across images.
 
@@ -108,11 +108,36 @@ In [grad cam notebook](grad_cam.ipynb), I implemented a Grad-CAM (Gradient-weigh
 
 Grad-CAM works by leveraging the gradients of the target class, flowing into the final convolutional layer of a CNN. The gradients are averaged over all the pixels to obtain the weights. It generates a localization map, highlighting the important regions in the image. These are heatmaps, normalized and visualized to highlight the important regions in the input image.
 
-The functio make_gradcam_heatmap in the [py file](fucntions_for_grad_cam.py) takes an input image array, computes the gradient of the predicted class score with respect to the activations of the last convolutional layer, and generates a Grad-CAM heatmap which tells me how much each activation in that layer influences the predicted class score. The grad_model is created by using the tf.keras.models.Model API. I used tf.GradientTape() to compute the gradients.
+The function make_gradcam_heatmap in the [py file](fucntions_for_grad_cam.py) takes an input image array, computes the gradient of the predicted class score with respect to the activations of the last convolutional layer, and generates a Grad-CAM heatmap which tells me how much each activation in that layer influences the predicted class score. The grad_model is created by using the tf.keras.models.Model API. I used tf.GradientTape() to compute the gradients.
 
 ## Main Results
 
-Summary of the main results obtained from the project, including model performance metrics and visualizations.
+The primary objective of this project was to compare the performance of a deep learning model built from scratch with a transfer learning model for pneumonia detection. The transfer learning approach was anticipated to perform better due to leveraging pre-trained weights from a model trained on a large dataset. For this reason, I want to verify this thesis and below are the results for both models, including the accuracy and loss for the training and validation sets:
+
+| Model                | Training Accuracy (mean ± std) | Training Loss (mean ± std) | Validation Accuracy (mean ± std) | Validation Loss (mean ± std) |
+|----------------------|---------------------------------|-----------------------------|-----------------------------------|-------------------------------|
+| Model from Scratch   | 0.95 ± 0.02                     | 0.90 ± 0.24                 | 0.65 ± 0.17                       | 51.77 ± 49.32                   |
+| Transfer Learning    | 0.94 ± 0.02                     | 0.06 ± 0.02                 | 0.77 ± 0.06                       | 0.47 ± 0.09                   |
+
+The transfer learning model outperformed the model built from scratch, demonstrating higher accuracy and lower loss on both the training and validation sets. This confirms the advantage of using pre-trained models in medical imaging tasks, where obtaining a large labeled dataset is often challenging.
+
+The table below presents the detailed classification report for the transfer learning model:
+
+| Metric             | 0 (Normal) | 1 (Pneumonia) | Accuracy | Macro Avg | Weighted Avg |
+|--------------------|------------|---------------|----------|-----------|--------------|
+| Precision          | 0.812749   | 0.919571      | 0.876603 | 0.866160  | 0.879513     |
+| Recall             | 0.871795   | 0.879487      | 0.876603 | 0.875641  | 0.876603     |
+| F1-Score           | 0.841237   | 0.899083      | 0.876603 | 0.870160  | 0.877391     |
+| Support            | 234        | 390           | 0.876603 | 624       | 624          |
+
+The transfer learning model achieved high precision, recall, and F1-scores for both classes, indicating its robustness and reliability in detecting pneumonia from chest X-ray images.
+
+Transfer learning reached a better performance in terms of accuracy also evaluating the test dataset: 0.88, respect to the 0.82 reached by the scratch model.
+
+By integrating Grad-CAM, we were able to not only achieve high performance in pneumonia detection but also improve the transparency and explainability of our model, which is a significant step towards the practical deployment of AI in healthcare. Here an example:
+
+![Grad Cam example](images_for_readme/grad_cam.png)
+
 
 ## Docker App
 
