@@ -104,9 +104,11 @@ The model is compiled using the Adam optimizer, binary cross-entropy loss, and a
 
 ### Grad-Cam
 
-Overall, this function takes an input image array, computes the gradient of the predicted class score with respect to the activations of the last convolutional layer, and generates a Grad-CAM heatmap highlighting important regions in the image for the predicted class.
+In [grad cam notebook](grad_cam.ipynb), I implemented a Grad-CAM (Gradient-weighted Class Activation Mapping) technique used to visualize the regions of an image that are most important for a neural network’s decision. It highlights the areas in the input image that are most relevant to the prediction made by the model, providing insights into which parts of an X-ray are contributing to a diagnosis.
 
-In the context of Grad-CAM, the gradient of the predicted class score with respect to the output of the last convolutional layer tells us how much each activation in that layer influences the predicted class score. This information is used to weigh the activations, highlighting the parts of the image that are most important for the prediction.
+Grad-CAM works by leveraging the gradients of the target class, flowing into the final convolutional layer of a CNN. The gradients are averaged over all the pixels to obtain the weights. It generates a localization map, highlighting the important regions in the image. These are heatmaps, normalized and visualized to highlight the important regions in the input image.
+
+The functio make_gradcam_heatmap in the [py file](fucntions_for_grad_cam.py) takes an input image array, computes the gradient of the predicted class score with respect to the activations of the last convolutional layer, and generates a Grad-CAM heatmap which tells me how much each activation in that layer influences the predicted class score. The grad_model is created by using the tf.keras.models.Model API. I used tf.GradientTape() to compute the gradients.
 
 ## Main Results
 
