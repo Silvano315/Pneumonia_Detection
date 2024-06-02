@@ -85,7 +85,22 @@ The model was compiled with the Adam optimizer, binary cross-entropy loss, and a
 
 #### Transfer Learning
 
-Explanation of the transfer learning approach adopted in the project.
+Transfer learning leverages pre-trained models, which have been trained on large datasets for different tasks, to solve new but related tasks. Among the advantages:
+1. Training time reduced 
+2. Performance improved
+3. Less data required
+
+I used a pre-trained VGG-Face model [[3](#ref3)]  to classify chest X-ray images for pneumonia detection. Although the VGG-Face model was originally trained for face recognition, its learned features are general enough to be useful for other types of image classification tasks. By freezing the pre-trained layers and adding custom layers, the model can focus on learning task-specific features without overfitting, leading to more accurate and efficient classification.
+
+The VGG-Face model is loaded from the python library DeepFace [[4](#ref4)]. This model, pre-trained on a large dataset for face recognition, serves as the base model. All layers of the VGG-Face model are frozen. This means their weights will not be updated during training, preserving the valuable features they have learned.
+
+A series of custom layers are added on top of the pre-trained model to adapt it to our specific task (pneumonia detection):
+- **Flatten Layer:** Flattens the output of the last convolutional layer of the VGG-Face model.
+- **Dense Layer:** Adds a fully connected layer with 512 units and ReLU activation.
+- **Dropout Layer:** Adds a dropout layer with a dropout rate of 0.5 to prevent overfitting.
+- **Output Layer:** Adds a dense layer with 1 unit and sigmoid activation for binary classification (Pneumonia or Normal).
+
+The model is compiled using the Adam optimizer, binary cross-entropy loss, and accuracy as the evaluation metric. Also for this approach, I used class weights to handle class imbalance.
 
 ### Grad-Cam
 
@@ -112,3 +127,5 @@ docker run --platform linux/amd64 -p 5001:5000 pneumonia-gradcam-app
 
 1. <a name="ref1"></a> https://www.who.int/health-topics/pneumonia#tab=tab_1
 2. <a name="ref2"></a> https://www.nhlbi.nih.gov/health/pneumonia/diagnosis#:~:text=A%20chest%20X%2Dray%20is,enough%20oxygen%20into%20your%20blood.
+3. <a name="ref3"></a>  Parkhi, Omkar, Andrea Vedaldi, and Andrew Zisserman. "Deep face recognition." BMVC 2015-Proceedings of the British Machine Vision Conference 2015. British Machine Vision Association, 2015.
+4. <a name="ref4"></a> https://github.com/serengil/deepface
