@@ -70,7 +70,18 @@ The main idea was that the transfer learning model would have reached the best p
 
 #### Model from scratch
 
-Description of the custom deep learning model built from scratch.
+Before feeding the images into the model, preprocessing is essential to ensure the data is in a suitable format for training. I used ImageDataGenerator from tensorflow.keras.preprocessing.image, which is a class used for real-time data augmentation. Here, it's used to rescale the pixel values of the images to the range [0, 1] by dividing by 255. Target size dimensions are set to (224,224) and batch size is 16 for training set.
+
+The convolutional neural network (CNN) was built from scratch using Keras' Sequential API. The model consists of:
+
+- **Conv2D Layers:** Four convolutional layers with increasing filter sizes (32, 64, 128, 128) to learn spatial hierarchies of features.
+- **BatchNormalization:** Applied after each convolutional layer to stabilize and accelerate training.
+- **MaxPooling2D:** Applied after each block of Conv2D and BatchNormalization layers to reduce spatial dimensions and extract dominant features.
+- **Flatten:** Flattens the 3D output to 1D to feed into the fully connected layers.
+- **Dense Layers:** Two fully connected layers. The first Dense layer has 512 units with ReLU activation followed by Dropout for regularization, and the second Dense layer has 1 unit with sigmoid activation for binary classification.
+
+The model was compiled with the Adam optimizer, binary cross-entropy loss, and accuracy as the evaluation metric. Due to the imbalance in the dataset, class weights were computed to give higher importance to the minority class during training (0.74 for label 0, 0.26 for label 1). The model was trained using GPU acceleration (if available) to speed up the training process.
+
 
 #### Transfer Learning
 
